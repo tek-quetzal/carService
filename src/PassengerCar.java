@@ -4,8 +4,8 @@ public class PassengerCar extends Vehicle {
         super();
     }
 
-    public PassengerCar(String brand,String name,String vinCode){
-        super(brand,name,vinCode);
+    public PassengerCar(String brand,String model,String vinCode){
+        super(brand,model,vinCode);
     }
 
     @Override

@@ -1,8 +1,8 @@
 
 public abstract class Vehicle {
-    protected String brand;
-    protected String model;
-    protected String vinCode;
+    private String brand;
+    private String model;
+    private String vinCode;
 
 
     public Vehicle(){

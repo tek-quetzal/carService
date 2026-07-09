@@ -1,5 +1,10 @@
 
-import java.util.*;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class Main{
     public static void main(String[] args) {
@@ -22,11 +27,23 @@ public class Main{
         orders.get(0).changeStatus(OrderStatus.IN_PROGRESS,smsService);
         orders.get(0).changeStatus(OrderStatus.COMPLETED,emailService);
 
+
+        Collections.sort(orders,new Comparator<Order>(){
+            @Override
+            public int compare(Order o1,Order o2){
+                double price1 = o1.getCar().calculateFinalPrice(o1.getPrice());
+                double price2 = o2.getCar().calculateFinalPrice(o2.getPrice());
+                return Double.compare(price1,price2);
+            }
+        });
+
+
+
         for(Order order: orders){
-            order.printInfo();
+            order.printOrderInvoice();
         }
 
-        System.out.printf("Общая выручка сервиса: %f%n",ServiceAnalytics.countSalary(orders));
+        System.out.printf("Общая выручка сервиса: %.2f%n",ServiceAnalytics.countSalary(orders));
 
     }
 }

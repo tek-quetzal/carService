@@ -3,7 +3,6 @@ public class Order {
 
     private static int orderCounter = 0;
 
-
     private int id;
     private String clientName;
     private double basePrice;
@@ -62,9 +61,9 @@ public class Order {
         return car;
     }
 
-    public void printInfo(){
-        System.out.printf("Заказ №%d: Клиент %s,Машина %s %s, Итоговая цена: %.2f%n",id,clientName,car.getBrand(),
-                car.getModel(),car.calculateFinalPrice(basePrice));
+    public void printOrderInvoice(){
+        Invoice check = new Invoice();
+        check.printReceipt();
     }
 
     public void changeStatus(OrderStatus newStatus, NotificationService notifier) {
@@ -72,6 +71,28 @@ public class Order {
         String message = "Статус вашего заказа №" + this.id + " изменился на: " + newStatus.getStatus() + "\n";
         notifier.notifyClient(this,message);
     }
+
+
+    public class Invoice{
+
+        public void printReceipt(){
+            int lenBorder = car.getVinCode().length() + car.getBrand().length() + car.getModel().length() + 15;
+            String border = "=".repeat(lenBorder);
+            System.out.println(border);
+            System.out.println("ООО \"Матвей-Автосервис\"");
+            System.out.printf("ЧЕК ДЛЯ ЗАКАЗА №%d%n",id);
+            System.out.printf("Клиент: %s%n",clientName);
+            System.out.printf("Автомобиль: %s %s (VIN: %s)%n",car.getBrand(),car.getModel(),car.getVinCode());
+            System.out.printf("Статус: %s%n",status.getStatus());
+            System.out.println("-".repeat(lenBorder));
+            System.out.printf("ИТОГО К ОПЛАТЕ: %.2f руб.%n",car.calculateFinalPrice(basePrice));
+            System.out.println(border + "\n\n");
+        }
+
+
+
+    }
+
 
 }
 
