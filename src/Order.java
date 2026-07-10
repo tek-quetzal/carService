@@ -21,8 +21,7 @@ public class Order {
 
     public void setPrice(double basePrice) {
         if (basePrice<0) {
-            System.out.println("Цена не может быть отрицательной!");
-            return;
+            throw new IllegalArgumentException("Ошибка создания заказа: Цена не может быть отрицательной!\n");
         }
         this.basePrice = basePrice;
     }

@@ -15,6 +15,9 @@ public abstract class Vehicle {
     public Vehicle(String brand,String model,String vinCode){
         this.brand = brand;
         this.model = model;
+        if (vinCode.length() != 17){
+            throw new InvalidVinException("Ошибка создания заказа: Неверный VIN-номер,он должен быть длиною в 17 символов\n");
+        }
         this.vinCode = vinCode;
     }
 
@@ -28,10 +31,11 @@ public abstract class Vehicle {
     }
 
     public void setVinCode(String vinCode) {
+        if (vinCode.length() != 17){
+            throw new InvalidVinException("Неверный VIN-номер,он должен быть длиною в 17 символов");
+        }
         this.vinCode = vinCode;
     }
-
-
 
     public String getBrand() {
         return brand;
