@@ -1,9 +1,5 @@
 
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 
 public class Main{
@@ -31,16 +27,44 @@ public class Main{
         }
 
 
+
+
         Truck truck1 = new Truck("Volvo", "FH16", "YV2RT40A1BA111222");
+        System.out.print("Введите базовую цену для нового заказа: ");
+        Scanner scan = new Scanner(System.in);
+        while(true) {
+            try {
+                double price = scan.nextDouble();
+                orders.add(new Order("Дмитрий",price,truck1));
+                break;
+            }
+            catch(InputMismatchException e){
+                scan.nextLine();
+                System.out.print("Ошибка: Введено не число! Попробуйте ввести еще раз: ");
+            }
+            catch(IllegalArgumentException e){
+                System.out.print(e.getMessage() + "Попробуйте ввести еще раз: ");
+            }
+        }
+
+
+
         Truck truck2 = new Truck("Scania", "R500", "YS2R4X200MA333444");
 
-
-
-        orders.add(new Order("Дмитрий",1000.0,truck1));
         orders.add(new Order("Елена",1500.0,truck2));
 
         orders.get(0).changeStatus(OrderStatus.IN_PROGRESS,smsService);
+
         orders.get(0).changeStatus(OrderStatus.COMPLETED,emailService);
+
+        try{
+            orders.get(0).changeStatus(OrderStatus.ACCEPTED,emailService);
+        }
+        catch(IllegalStatusTransitionException e){
+            System.out.println(e.getMessage());
+        }
+
+
 
 
         Collections.sort(orders,new Comparator<Order>(){

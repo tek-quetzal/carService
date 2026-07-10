@@ -66,6 +66,9 @@ public class Order {
     }
 
     public void changeStatus(OrderStatus newStatus, NotificationService notifier) {
+        if ((this.status == OrderStatus.PAID || this.status == OrderStatus.COMPLETED) && (newStatus == OrderStatus.IN_PROGRESS || newStatus == OrderStatus.ACCEPTED)){
+            throw new IllegalStatusTransitionException("Ошибка: Запрещено откатывать статус выполненного или оплаченного заказа!\n");
+        }
         this.status = newStatus;
         String message = "Статус вашего заказа №" + this.id + " изменился на: " + newStatus.getStatus() + "\n";
         notifier.notifyClient(this,message);
