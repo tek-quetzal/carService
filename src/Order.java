@@ -1,20 +1,30 @@
 
 public class Order {
 
-    private static int orderCounter = 0;
 
     private int id;
     private String clientName;
     private double basePrice;
-    private OrderStatus status = OrderStatus.ACCEPTED;
+    private OrderStatus status;
     private Vehicle car;
 
 
-    public Order(String clientName,double basePrice, Vehicle car){
+
+    public Order(){
+        this.clientName = "NotFound";
+        this.basePrice = 0;
+        this.id = -1;
+        this.car = new Truck();
+    }
+
+
+
+    public Order(int id, String clientName,double basePrice,OrderStatus status, Vehicle car){
         this.clientName = clientName;
         setPrice(basePrice);
-        this.id = ++orderCounter;
+        this.id = id;
         this.car = car;
+        this.status = status;
     }
 
 
